@@ -6,6 +6,7 @@ import asyncio
 import logging
 from core.settings import settings
 from core.handlers.commands import set_commands
+import sys
 
 
 async def on_startup(bot: Bot):
@@ -17,9 +18,6 @@ async def on_shutdown(bot: Bot):
     await bot.send_message(settings.bots.ADMIN_ID, text='Bot shut down')
 
 async def start():
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s - %(name)s - %(levelname)s - %(message).'
-                        )
     bot = Bot(
     token=settings.bots.BOT_TOKEN,
     default=DefaultBotProperties(parse_mode="HTML"),
@@ -36,4 +34,5 @@ async def start():
         await bot.session.close()
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(start())
